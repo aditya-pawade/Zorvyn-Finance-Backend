@@ -113,6 +113,10 @@ Build JDBC URL:
 java -jar target/finance-backend-0.0.1-SNAPSHOT.jar
 ```
 
+If your Render UI does not show Java as a language option, select Docker.
+This repository includes a production-ready `Dockerfile` and `.dockerignore`.
+In Docker mode, leave Build Command and Start Command empty.
+
 ### 3) Add environment variables in Render
 
 You can copy keys from `.env.render.example`.

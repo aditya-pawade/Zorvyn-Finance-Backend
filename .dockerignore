@@ -1,0 +1,10 @@
+target/
+.git/
+.vscode/
+.settings/
+.classpath
+.project
+.apt_generated/
+.apt_generated_tests/
+*.log
+*.tmp
