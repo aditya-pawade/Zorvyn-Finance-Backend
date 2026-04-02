@@ -99,6 +99,7 @@ Build JDBC URL:
 
 1. In Render, click New -> Web Service.
 2. Connect this GitHub repository.
+3. Render can auto-detect settings from `render.yaml` in this repo.
 3. Runtime: Docker not required (native Java build).
 4. Build command:
 
@@ -113,6 +114,8 @@ java -jar target/finance-backend-0.0.1-SNAPSHOT.jar
 ```
 
 ### 3) Add environment variables in Render
+
+You can copy keys from `.env.render.example`.
 
 - `SPRING_DATASOURCE_URL` = `jdbc:postgresql://<HOST>:5432/<DB_NAME>?sslmode=require`
 - `SPRING_DATASOURCE_USERNAME` = Neon username
@@ -134,6 +137,14 @@ After deploy, test:
 - `GET /api/dashboard/summary`
 
 If needed, seed users temporarily by setting `APP_SECURITY_SEED_TEST_USERS=true`, verify, then set it back to `false` and redeploy.
+
+## Live Smoke Test Script
+
+After deployment, run:
+
+```powershell
+.\scripts\live-smoke-test.ps1 -BaseUrl "https://your-service.onrender.com"
+```
 
 ## Authentication
 

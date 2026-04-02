@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: zorvyn-finance-backend
+    runtime: java
+    plan: free
+    autoDeploy: true
+    buildCommand: ./mvnw -DskipTests package
+    startCommand: java -jar target/finance-backend-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: APP_DATASOURCE_DRIVER_CLASS_NAME
+        value: org.postgresql.Driver
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: APP_SECURITY_SEED_TEST_USERS
+        value: false
+      - key: APP_JWT_SECRET
+        sync: false
+      - key: APP_JWT_EXPIRATION_MS
+        value: 3600000
