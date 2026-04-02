@@ -73,6 +73,68 @@ Windows:
 .\mvnw.cmd test
 ```
 
+## Free Deployment (Easy)
+
+Recommended free setup:
+
+- Render (free web service)
+- Neon (free PostgreSQL)
+
+### 1) Create free PostgreSQL DB (Neon)
+
+1. Create a Neon account and project.
+2. Create a database.
+3. Copy:
+  - Host
+  - Database name
+  - Username
+  - Password
+  - Port
+
+Build JDBC URL:
+
+`jdbc:postgresql://<HOST>:5432/<DB_NAME>?sslmode=require`
+
+### 2) Create web service (Render)
+
+1. In Render, click New -> Web Service.
+2. Connect this GitHub repository.
+3. Runtime: Docker not required (native Java build).
+4. Build command:
+
+```bash
+./mvnw -DskipTests package
+```
+
+5. Start command:
+
+```bash
+java -jar target/finance-backend-0.0.1-SNAPSHOT.jar
+```
+
+### 3) Add environment variables in Render
+
+- `SPRING_DATASOURCE_URL` = `jdbc:postgresql://<HOST>:5432/<DB_NAME>?sslmode=require`
+- `SPRING_DATASOURCE_USERNAME` = Neon username
+- `SPRING_DATASOURCE_PASSWORD` = Neon password
+- `APP_DATASOURCE_DRIVER_CLASS_NAME` = `org.postgresql.Driver`
+- `SPRING_JPA_HIBERNATE_DDL_AUTO` = `update`
+- `APP_SECURITY_SEED_TEST_USERS` = `false`
+- `APP_JWT_SECRET` = long random secret (at least 32 chars)
+- `APP_JWT_EXPIRATION_MS` = `3600000`
+
+Render provides `PORT` automatically.
+
+### 4) Deploy and verify
+
+After deploy, test:
+
+- `GET /api/auth/me` (with valid auth)
+- `POST /api/auth/token`
+- `GET /api/dashboard/summary`
+
+If needed, seed users temporarily by setting `APP_SECURITY_SEED_TEST_USERS=true`, verify, then set it back to `false` and redeploy.
+
 ## Authentication
 
 ### 1) HTTP Basic
